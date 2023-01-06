@@ -13,6 +13,7 @@ import {
   faUserGroup,
   faArrowUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
+import { PostCard } from '../../components/PostCard'
 
 export function Blog() {
   return (
@@ -50,6 +51,8 @@ export function Blog() {
           </PersonalInfo>
         </ProfileContent>
       </Profile>
+
+      <PostCard />
     </BlogContent>
   )
 }
