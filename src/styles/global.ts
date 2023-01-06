@@ -61,6 +61,14 @@ export const GlobalStyle = createGlobalStyle`
     }
     font-size: 14px;
   }
+
+  .span {
+    color: ${(props) => props.theme['base-span']};
+    :first-child {
+      line-height: 160%;
+    }
+    font-size: 14px;
+  }
   
   .link {
     font-weight: bold;
