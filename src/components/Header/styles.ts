@@ -9,7 +9,7 @@ export const HeaderContent = styled.header`
   justify-content: space-between;
   gap: 17.0625rem;
   margin-right: 0;
-
+  position: sticky;
   .logoGithubBlog {
     margin-top: -4rem;
     width: 148px;

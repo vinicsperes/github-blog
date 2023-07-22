@@ -14,6 +14,7 @@ export const PostCardContent = styled.div`
 `
 export const PostHeader = styled.div`
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
   gap: 1rem;
   p {

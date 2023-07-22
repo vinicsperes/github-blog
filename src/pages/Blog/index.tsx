@@ -1,9 +1,12 @@
 import {
   BlogContent,
+  GridContainer,
   PersonalInfo,
+  PostInfo,
   Profile,
   ProfileContent,
   ProfileImg,
+  SearchPost,
 } from './styles'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -27,21 +30,37 @@ interface githubDataType {
   githubUrl?: string
 }
 
+interface Issue {
+  url: string
+  title: string
+  body: string
+  created_at: string
+}
+
 export function Blog() {
   const [githubData, setGithubData] = useState<githubDataType>({})
+  const [issueList, setIssueList] = useState<Issue[]>([])
 
-  const fetchData = () => {
+  const getUserInfo = () => {
     return fetch(`https://api.github.com/users/vinicsperes`)
       .then((response) => response.json())
       .then((data) => setGithubData(data))
   }
 
+  const getIssues = async () => {
+    const response = await fetch(
+      'https://api.github.com/repos/vinicsperes/github-blog/issues',
+    )
+    const data = await response.json()
+    setIssueList(data)
+  }
+
   useEffect(() => {
-    fetchData()
+    getUserInfo()
+    getIssues()
   }, [])
 
-  console.log(githubData)
-
+  console.log(issueList)
   return (
     <BlogContent>
       <Profile>
@@ -74,7 +93,26 @@ export function Blog() {
         </ProfileContent>
       </Profile>
 
-      <PostCard />
+      <PostInfo>
+        <h3>Publicações</h3>
+        <span>{issueList.length} publicações</span>
+      </PostInfo>
+      <SearchPost placeholder="Buscar conteúdo" />
+
+      <GridContainer>
+        {issueList.map((issue) => {
+          console.log(issue.created_at)
+
+          return (
+            <PostCard
+              key={issue.url}
+              title={issue.title}
+              body={issue.body}
+              createdAt={issue.created_at}
+            />
+          )
+        })}
+      </GridContainer>
     </BlogContent>
   )
 }
