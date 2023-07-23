@@ -19,6 +19,7 @@ import {
 import { PostCard } from '../../components/PostCard'
 
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 interface githubDataType {
   avatar_url?: string
@@ -104,12 +105,21 @@ export function Blog() {
           console.log(issue.created_at)
 
           return (
-            <PostCard
+            <Link
               key={issue.url}
-              title={issue.title}
-              body={issue.body}
-              createdAt={issue.created_at}
-            />
+              to={`/post/${issue.url.split('/').pop()}`}
+              style={{
+                textDecoration: 'none',
+                color: 'inherit',
+              }}
+            >
+              <PostCard
+                key={issue.url}
+                title={issue.title}
+                body={issue.body}
+                createdAt={issue.created_at}
+              />
+            </Link>
           )
         })}
       </GridContainer>
