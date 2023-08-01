@@ -18,7 +18,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { PostCard } from '../../components/PostCard'
 
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 interface githubDataType {
@@ -41,6 +41,7 @@ interface Issue {
 export function Blog() {
   const [githubData, setGithubData] = useState<githubDataType>({})
   const [issueList, setIssueList] = useState<Issue[]>([])
+  const [searchedData, setSearchedData] = useState<Issue[]>([])
 
   const getUserInfo = () => {
     return fetch(`https://api.github.com/users/vinicsperes`)
@@ -54,6 +55,7 @@ export function Blog() {
     )
     const data = await response.json()
     setIssueList(data)
+    setSearchedData(data)
   }
 
   useEffect(() => {
@@ -61,7 +63,17 @@ export function Blog() {
     getIssues()
   }, [])
 
-  console.log(issueList)
+  function handleSearchedData(event: React.ChangeEvent<HTMLInputElement>) {
+    const searchTerm = event.target.value.toLowerCase()
+    if (searchTerm === '') setSearchedData(issueList)
+    else
+      setSearchedData(
+        issueList.filter((issue) =>
+          issue.title.toLowerCase().includes(searchTerm),
+        ),
+      )
+  }
+
   return (
     <BlogContent>
       <Profile>
@@ -98,12 +110,10 @@ export function Blog() {
         <h3>Publicações</h3>
         <span>{issueList.length} publicações</span>
       </PostInfo>
-      <SearchPost placeholder="Buscar conteúdo" />
+      <SearchPost onChange={handleSearchedData} placeholder="Buscar conteúdo" />
 
       <GridContainer>
-        {issueList.map((issue) => {
-          console.log(issue.created_at)
-
+        {searchedData.map((issue) => {
           return (
             <Link
               key={issue.url}
@@ -115,7 +125,11 @@ export function Blog() {
             >
               <PostCard
                 key={issue.url}
-                title={issue.title}
+                title={
+                  issue.title.length > 25
+                    ? issue.title.slice(0, 35) + '...'
+                    : issue.title
+                }
                 body={issue.body}
                 createdAt={issue.created_at}
               />

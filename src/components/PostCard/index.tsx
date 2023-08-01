@@ -1,7 +1,7 @@
-import moment from 'moment'
 import { PostCardContent, PostHeader } from './styles'
 import 'moment/locale/pt-br'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
+import { formatRelativeTime } from '../../functions/formatRelativeTime'
 interface PostCardProps {
   title: string
   body: string
@@ -10,25 +10,6 @@ interface PostCardProps {
 
 export function PostCard({ title, body, createdAt }: PostCardProps) {
   console.log(createdAt)
-
-  const formatRelativeTime = (isoDate: string): string => {
-    moment.locale('pt-br')
-    const currentDate = moment()
-    const date = moment(isoDate, moment.ISO_8601)
-    const diffInDays = currentDate.diff(date, 'days')
-
-    if (diffInDays === 0) {
-      return 'Hoje'
-    } else if (diffInDays === 1) {
-      return 'Há 1 dia'
-    } else if (diffInDays > 7) {
-      return `Há ${Math.floor(diffInDays / 7)} semanas`
-    } else if (diffInDays > 1) {
-      return `Há ${diffInDays} dias`
-    } else {
-      return date.fromNow()
-    }
-  }
 
   return (
     <PostCardContent>

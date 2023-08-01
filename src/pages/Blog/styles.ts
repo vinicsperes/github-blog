@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const BlogContent = styled.div`
   background: ${(props) => props.theme['base-background']};
   width: 100%;
+  height: 125vh;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -59,7 +60,7 @@ export const SearchPost = styled.input`
   padding: 10px;
   font-size: 16px;
   margin-bottom: 3rem;
-  color: #333;
+  color: ${(props) => props.theme['base-text']};
   :placeholder {
     color: ${(props) => props.theme['base-label']};
     font-style: italic;
