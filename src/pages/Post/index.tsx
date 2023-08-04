@@ -1,6 +1,12 @@
-// Post.tsx
 import { useParams } from 'react-router-dom'
-import { PostButtons, PostContent, PostInfo } from './styles'
+import {
+  PostButtons,
+  PostContent,
+  PostInfo,
+  PostMain,
+  Info,
+  InfoWrapper,
+} from './styles'
 import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
@@ -11,6 +17,8 @@ import {
   faArrowUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons'
 import CustomLink from '../../components/CustomLink'
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
+import { formatRelativeTime } from '../../functions/formatRelativeTime'
 
 interface Issue {
   url: string
@@ -45,7 +53,7 @@ export default function Post() {
   }
 
   return (
-    <PostContent>
+    <PostMain>
       <PostInfo>
         <PostButtons>
           <CustomLink
@@ -72,19 +80,28 @@ export default function Post() {
         </PostButtons>
 
         <h3>{postInfo.title}</h3>
-        <div>
-          <FontAwesomeIcon icon={faGithub} />
-          <span>{postInfo.user.login}</span>
-
-          <FontAwesomeIcon icon={faCalendarDay} />
-          <span>{postInfo.created_at}</span>
-
-          <FontAwesomeIcon icon={faComment} />
-          <span>{postInfo.comments} comentários</span>
-        </div>
+        <InfoWrapper>
+          <Info>
+            <FontAwesomeIcon style={{ fontSize: '18px' }} icon={faGithub} />
+            <span>{postInfo.user.login}</span>
+          </Info>
+          <Info>
+            <FontAwesomeIcon
+              style={{ fontSize: '18px' }}
+              icon={faCalendarDay}
+            />
+            <span>{formatRelativeTime(postInfo.created_at)}</span>
+          </Info>
+          <Info>
+            <FontAwesomeIcon style={{ fontSize: '18px' }} icon={faComment} />
+            <span>{postInfo.comments} comentários</span>
+          </Info>
+        </InfoWrapper>
       </PostInfo>
-      <p>{postInfo.body}</p>
+      <PostContent>
+        <ReactMarkdown>{postInfo.body}</ReactMarkdown>
+      </PostContent>
       {/* Other content for the individual post */}
-    </PostContent>
+    </PostMain>
   )
 }

@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 
-export const PostContent = styled.div`
+export const PostMain = styled.div`
   background: ${(props) => props.theme['base-background']};
   width: 100%;
+  height: 100vh;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
@@ -25,4 +26,22 @@ export const PostInfo = styled.div`
 export const PostButtons = styled.div`
   display: flex;
   justify-content: space-between;
+`
+
+export const PostContent = styled.div`
+  width: 54rem;
+  padding: 2.5rem 2rem;
+`
+export const InfoWrapper = styled.div`
+  display: flex;
+  gap: 2rem;
+`
+
+export const Info = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: ${(props) => props.theme['base-span']};
+  font-size: 16px;
+  line-height: 160%;
 `
