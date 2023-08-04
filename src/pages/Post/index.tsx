@@ -101,7 +101,6 @@ export default function Post() {
       <PostContent>
         <ReactMarkdown>{postInfo.body}</ReactMarkdown>
       </PostContent>
-      {/* Other content for the individual post */}
     </PostMain>
   )
 }
